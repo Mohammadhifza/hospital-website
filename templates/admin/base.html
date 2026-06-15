@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>{% block title %}Admin – MediCare{% endblock %}</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/admin.css') }}"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+</head>
+<body class="admin-body">
+
+{% if session.get('admin_logged_in') %}
+<div class="admin-layout">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="sidebar-logo">
+      <i class="fas fa-heartbeat"></i>
+      <span>MediCare Admin</span>
+    </div>
+    <nav class="sidebar-nav">
+      <a href="{{ url_for('admin_dashboard') }}" class="{{ 'active' if request.endpoint=='admin_dashboard' }}">
+        <i class="fas fa-tachometer-alt"></i> Dashboard
+      </a>
+      <a href="{{ url_for('admin_doctors') }}" class="{{ 'active' if 'doctor' in request.endpoint }}">
+        <i class="fas fa-user-md"></i> Doctors
+      </a>
+      <a href="{{ url_for('admin_appointments') }}" class="{{ 'active' if 'appointment' in request.endpoint }}">
+        <i class="fas fa-calendar-check"></i> Appointments
+      </a>
+      <a href="{{ url_for('index') }}" target="_blank">
+        <i class="fas fa-external-link-alt"></i> View Site
+      </a>
+    </nav>
+    <a href="{{ url_for('admin_logout') }}" class="sidebar-logout">
+      <i class="fas fa-sign-out-alt"></i> Logout
+    </a>
+  </aside>
+
+  <!-- MAIN -->
+  <main class="admin-main">
+    <header class="admin-header">
+      <h1>{% block page_title %}Dashboard{% endblock %}</h1>
+      <div class="admin-user"><i class="fas fa-user-shield"></i> Administrator</div>
+    </header>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% for cat, msg in messages %}
+      <div class="flash flash-{{ cat }}">
+        <i class="fas {{ 'fa-check-circle' if cat=='success' else 'fa-exclamation-circle' }}"></i>
+        {{ msg }}
+      </div>
+      {% endfor %}
+    {% endwith %}
+
+    <div class="admin-content">
+      {% block content %}{% endblock %}
+    </div>
+  </main>
+</div>
+{% else %}
+{% block auth_content %}{% endblock %}
+{% endif %}
+
+</body>
+</html>

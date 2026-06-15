@@ -1,0 +1,87 @@
+{% extends 'base.html' %}
+{% block title %}MediCare Hospital – Home{% endblock %}
+
+{% block content %}
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-content">
+    <span class="hero-badge"><i class="fas fa-shield-alt"></i> Trusted Healthcare</span>
+    <h1>Your Health Is<br>Our <span>Priority</span></h1>
+    <p>World-class medical care delivered with compassion. Our expert doctors and modern facilities ensure you receive the best treatment possible.</p>
+    <div class="hero-btns">
+      <a href="{{ url_for('appointment') }}" class="btn-primary">Book Appointment</a>
+      <a href="{{ url_for('doctors') }}" class="btn-outline">Meet Our Doctors</a>
+    </div>
+    <div class="hero-stats">
+      <div class="stat"><span>25+</span><p>Years Experience</p></div>
+      <div class="stat"><span>50+</span><p>Specialists</p></div>
+      <div class="stat"><span>10k+</span><p>Happy Patients</p></div>
+    </div>
+  </div>
+  <div class="hero-image">
+    <div class="hero-img-wrap">
+      <div class="hero-circle"></div>
+      <i class="fas fa-hospital-user hero-icon"></i>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section class="section services">
+  <div class="section-header">
+    <span class="section-tag">What We Offer</span>
+    <h2>Our Medical Services</h2>
+    <p>Comprehensive healthcare services tailored to your needs</p>
+  </div>
+  <div class="services-grid">
+    {% set services = [
+      ('fa-heart-pulse', 'Cardiology',       'Expert cardiac care, diagnostics, and treatment for heart conditions.'),
+      ('fa-brain',       'Neurology',         'Advanced care for brain, spine, and nervous system disorders.'),
+      ('fa-baby',        'Pediatrics',        'Specialised care for children from newborns to adolescents.'),
+      ('fa-bone',        'Orthopedics',       'Treatment for bones, joints, and musculoskeletal conditions.'),
+      ('fa-eye',         'Ophthalmology',     'Complete eye care including surgery and vision correction.'),
+      ('fa-lungs',       'Pulmonology',       'Diagnosis and treatment of lung and respiratory conditions.')
+    ] %}
+    {% for icon, name, desc in services %}
+    <div class="service-card">
+      <div class="service-icon"><i class="fas {{ icon }}"></i></div>
+      <h3>{{ name }}</h3>
+      <p>{{ desc }}</p>
+      <a href="{{ url_for('appointment') }}" class="service-link">Book Now <i class="fas fa-arrow-right"></i></a>
+    </div>
+    {% endfor %}
+  </div>
+</section>
+
+<!-- WHY US -->
+<section class="section why-us">
+  <div class="why-image">
+    <div class="why-img-box">
+      <i class="fas fa-stethoscope why-big-icon"></i>
+      <div class="why-badge"><i class="fas fa-award"></i> ISO Certified</div>
+    </div>
+  </div>
+  <div class="why-content">
+    <span class="section-tag">Why Choose Us</span>
+    <h2>We Care About Your Health</h2>
+    <p>At MediCare, we combine cutting-edge technology with compassionate care to deliver the best possible outcomes for our patients.</p>
+    <ul class="why-list">
+      <li><i class="fas fa-check-circle"></i> 24/7 Emergency Services</li>
+      <li><i class="fas fa-check-circle"></i> Expert Specialist Doctors</li>
+      <li><i class="fas fa-check-circle"></i> State-of-the-art Equipment</li>
+      <li><i class="fas fa-check-circle"></i> Affordable Treatment Plans</li>
+      <li><i class="fas fa-check-circle"></i> Patient-First Approach</li>
+    </ul>
+    <a href="{{ url_for('contact') }}" class="btn-primary">Contact Us</a>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section">
+  <h2>Ready to Book Your Appointment?</h2>
+  <p>Schedule a consultation with our specialists today. Quick, easy, and hassle-free.</p>
+  <a href="{{ url_for('appointment') }}" class="btn-white">Book an Appointment</a>
+</section>
+
+{% endblock %}

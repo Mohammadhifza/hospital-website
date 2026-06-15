@@ -1,0 +1,86 @@
+{% extends 'base.html' %}
+{% block title %}Book Appointment – MediCare{% endblock %}
+
+{% block content %}
+
+<section class="page-hero">
+  <h1>Book an Appointment</h1>
+  <p>Fill in the form below and we'll confirm your appointment shortly</p>
+</section>
+
+<section class="section">
+  <div class="form-container">
+
+    {% if success %}
+    <div class="alert alert-success">
+      <i class="fas fa-check-circle"></i>
+      <div>
+        <strong>Appointment Booked Successfully!</strong>
+        <p>Thank you! We'll contact you shortly to confirm your appointment.</p>
+      </div>
+    </div>
+    {% endif %}
+
+    {% if errors %}
+    <div class="alert alert-error">
+      <i class="fas fa-exclamation-circle"></i>
+      <ul>{% for e in errors %}<li>{{ e }}</li>{% endfor %}</ul>
+    </div>
+    {% endif %}
+
+    <div class="form-card">
+      <h2><i class="fas fa-calendar-plus"></i> Appointment Details</h2>
+      <form method="POST" action="{{ url_for('appointment') }}">
+        <div class="form-row">
+          <div class="form-group">
+            <label>Patient Name <span>*</span></label>
+            <input type="text" name="patient_name" placeholder="Your full name"
+                   value="{{ form.patient_name if form else '' }}" required/>
+          </div>
+          <div class="form-group">
+            <label>Phone Number <span>*</span></label>
+            <input type="tel" name="phone" placeholder="+91 XXXXX XXXXX"
+                   value="{{ form.phone if form else '' }}" required/>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Email Address <span>*</span></label>
+            <input type="email" name="email" placeholder="your@email.com"
+                   value="{{ form.email if form else '' }}" required/>
+          </div>
+          <div class="form-group">
+            <label>Select Doctor <span>*</span></label>
+            <select name="doctor_id" required>
+              <option value="">-- Choose a Doctor --</option>
+              {% for doc in doctors %}
+              <option value="{{ doc['id'] }}"
+                {{ 'selected' if form and form.doctor_id == doc['id']|string }}>
+                {{ doc['name'] }} – {{ doc['specialization'] }}
+              </option>
+              {% endfor %}
+            </select>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Appointment Date <span>*</span></label>
+            <input type="date" name="appointment_date"
+                   value="{{ form.appointment_date if form else '' }}"
+                   min="{{ '' }}" required/>
+          </div>
+        </div>
+        <div class="form-group full">
+          <label>Message / Problem Description</label>
+          <textarea name="message" rows="4" placeholder="Briefly describe your symptoms or reason for visit…">{{ form.message if form else '' }}</textarea>
+        </div>
+        <button type="submit" class="btn-submit">
+          <i class="fas fa-calendar-check"></i> Confirm Appointment
+        </button>
+      </form>
+    </div>
+
+  </div>
+</section>
+
+{% endblock %}

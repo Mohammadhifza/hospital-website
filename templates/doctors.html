@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+{% block title %}Our Doctors – MediCare{% endblock %}
+
+{% block content %}
+
+<section class="page-hero">
+  <h1>Meet Our Doctors</h1>
+  <p>Our team of experienced specialists dedicated to your health</p>
+</section>
+
+<section class="section">
+  <div class="doctors-grid">
+    {% for doc in doctors %}
+    <div class="doctor-card">
+      <div class="doctor-avatar">
+        <i class="fas fa-user-md"></i>
+      </div>
+      <div class="doctor-info">
+        <h3>{{ doc['name'] }}</h3>
+        <span class="specialization">{{ doc['specialization'] }}</span>
+        <div class="available-days">
+          <i class="fas fa-calendar-check"></i>
+          <span>{{ doc['available_days'] }}</span>
+        </div>
+        <a href="{{ url_for('appointment') }}" class="btn-book-doc">Book Appointment</a>
+      </div>
+    </div>
+    {% else %}
+    <p class="no-data">No doctors found. Please check back later.</p>
+    {% endfor %}
+  </div>
+</section>
+
+{% endblock %}
